@@ -33,7 +33,6 @@ export interface DefaultPermissionDefinition {
   module: string;
 }
 
-// Permissoes sao um catalogo global controlado pelo sistema; tenants apenas usam esses codigos via roles.
 export const DEFAULT_PERMISSIONS: DefaultPermissionDefinition[] = [
   {
     code: PermissionCode.ADMIN_ALL,

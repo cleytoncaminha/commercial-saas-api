@@ -21,7 +21,6 @@ export const CurrentTenant = createParamDecorator<
 
   const user: AuthenticatedUserPayload = request.user;
 
-  // Em rotas protegidas, o tenant vem do JWT validado, nao de body, query ou headers manipulaveis.
   return {
     tenantId: user.tenantId,
     tenantSlug: user.tenantSlug,
