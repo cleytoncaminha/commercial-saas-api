@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnv } from './config/env.validation';
+import { TenantsModule } from './modules/tenants';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { validateEnv } from './config/env.validation';
         logging: config.get<string>('NODE_ENV') === 'development',
       }),
     }),
+    TenantsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
