@@ -1,11 +1,20 @@
 import { UserRole } from '../../users';
 
-export interface JwtPayload {
-  sub: string;
+export interface AuthenticatedTenantContext {
   tenantId: string;
   tenantSlug: string;
   schemaName: string;
+}
+
+export interface AuthenticatedUserPayload extends AuthenticatedTenantContext {
+  sub: string;
   role: UserRole;
 }
 
-export type CurrentUserPayload = JwtPayload;
+export interface AuthMeResponse {
+  user: AuthenticatedUserPayload;
+  tenant: AuthenticatedTenantContext;
+}
+
+export type JwtPayload = AuthenticatedUserPayload;
+export type CurrentUserPayload = AuthenticatedUserPayload;

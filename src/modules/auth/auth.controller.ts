@@ -15,12 +15,17 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { TenantHostResolver } from '../../common';
+import { CurrentTenant } from './decorators/current-tenant.decorator';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { CurrentUserPayload } from './types/jwt-payload.type';
-import { LoginResponse } from './types/login-response.type';
+import type {
+  AuthenticatedTenantContext,
+  AuthenticatedUserPayload,
+  AuthMeResponse,
+} from './types/jwt-payload.type';
+import type { LoginResponse } from './types/login-response.type';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -55,8 +60,14 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get current authenticated JWT context' })
-  @ApiOkResponse({ description: 'Current JWT payload.' })
-  me(@CurrentUser() currentUser: CurrentUserPayload): CurrentUserPayload {
-    return currentUser;
+  @ApiOkResponse({ description: 'Current user and tenant context from JWT.' })
+  me(
+    @CurrentUser() currentUser: AuthenticatedUserPayload,
+    @CurrentTenant() tenant: AuthenticatedTenantContext,
+  ): AuthMeResponse {
+    return {
+      user: currentUser,
+      tenant,
+    };
   }
 }
