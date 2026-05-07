@@ -29,9 +29,10 @@ describe('AppController (e2e)', () => {
     process.env.JWT_SECRET = jwtSecret;
 
     getPermissionCodesForMembership = jest.fn();
-    const findAllPermissions = jest
-      .fn<PermissionsService['findAll']>()
-      .mockResolvedValue(createPermissionEntities());
+    const findAllPermissions: jest.MockedFunction<
+      PermissionsService['findAll']
+    > = jest.fn();
+    findAllPermissions.mockResolvedValue(createPermissionEntities());
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],

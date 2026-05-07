@@ -27,7 +27,7 @@ describe('PermissionsGuard', () => {
 
     const reflector = {
       getAllAndOverride: <T>() => requiredPermissions as T | undefined,
-    } as Reflector;
+    } as unknown as Reflector;
 
     const tenantMembershipsService = {
       getPermissionCodesForMembership,
