@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnv } from './config/env.validation';
+import { AuthModule } from './modules/auth';
 import { TenantsModule } from './modules/tenants';
 import { UsersModule } from './modules/users';
 
@@ -28,6 +29,7 @@ import { UsersModule } from './modules/users';
         logging: config.get<string>('NODE_ENV') === 'development',
       }),
     }),
+    AuthModule,
     TenantsModule,
     UsersModule,
   ],
