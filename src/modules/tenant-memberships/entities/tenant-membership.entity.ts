@@ -8,7 +8,7 @@ import {
   ManyToMany,
   ManyToOne,
 } from 'typeorm';
-import { BaseEntity } from '../../../common';
+import { BaseEntity } from '../../../common/entities/base.entity';
 import { RoleEntity } from '../../roles/entities/role.entity';
 import { TenantEntity } from '../../tenants/entities/tenant.entity';
 import { UserEntity } from '../../users/entities/user.entity';

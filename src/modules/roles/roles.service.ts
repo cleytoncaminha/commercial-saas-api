@@ -6,11 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  PermissionCode,
-  PermissionEntity,
-  PermissionsService,
-} from '../permissions';
+import { PermissionEntity } from '../permissions/entities/permission.entity';
+import { PermissionCode } from '../permissions/permissions.constants';
+import { PermissionsService } from '../permissions/permissions.service';
 import { TenantEntity } from '../tenants/entities/tenant.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
@@ -115,6 +113,16 @@ export class RolesService {
   ): Promise<RoleEntity> {
     const role = await this.findOneByTenant(tenantId, roleId);
     role.permissions = await this.getPermissionsOrFail(permissionCodes);
+
+    return this.rolesRepository.save(role);
+  }
+
+  async deactivateForTenant(
+    tenantId: string,
+    roleId: string,
+  ): Promise<RoleEntity> {
+    const role = await this.findOneByTenant(tenantId, roleId);
+    role.isActive = false;
 
     return this.rolesRepository.save(role);
   }

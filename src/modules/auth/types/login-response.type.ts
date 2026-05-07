@@ -1,13 +1,12 @@
-import { UserRole } from '../../users';
-
 export interface LoginUserResponse {
   id: string;
   tenantId: string;
   tenantSlug: string;
   schemaName: string;
+  membershipId: string;
+  membershipRole: string;
   name: string;
   email: string;
-  role: UserRole;
 }
 
 export interface LoginResponse {

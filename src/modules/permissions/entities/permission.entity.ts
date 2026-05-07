@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Column, Entity, Index } from 'typeorm';
-import { BaseEntity } from '../../../common';
+import { BaseEntity } from '../../../common/entities/base.entity';
 import { PermissionCode } from '../permissions.constants';
 
 @Entity({ name: 'permissions', schema: 'public' })

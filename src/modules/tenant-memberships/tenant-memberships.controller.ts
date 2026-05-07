@@ -6,8 +6,12 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { CurrentTenant, JwtAuthGuard } from '../auth';
+import { PermissionsGuard } from '../../common/rbac/permissions.guard';
+import { RequirePermissions } from '../../common/rbac/require-permissions.decorator';
+import { CurrentTenant } from '../auth/decorators/current-tenant.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AuthenticatedTenantContext } from '../auth/types/jwt-payload.type';
+import { PermissionCode } from '../permissions/permissions.constants';
 import { AssignMembershipRolesDto } from './dto/assign-membership-roles.dto';
 import { TenantMembershipEntity } from './entities/tenant-membership.entity';
 import { TenantMembershipsService } from './tenant-memberships.service';
@@ -20,7 +24,8 @@ export class TenantMembershipsController {
   ) {}
 
   @Post(':membershipId/roles')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(PermissionCode.ROLES_ASSIGN)
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Assign tenant-scoped roles to a membership',
@@ -33,6 +38,7 @@ export class TenantMembershipsController {
     @Param('membershipId') membershipId: string,
     @Body() assignMembershipRolesDto: AssignMembershipRolesDto,
   ): Promise<TenantMembershipEntity> {
+    // CurrentTenant garante que a atribuicao de roles use o tenant do JWT, nao dados manipulaveis da requisicao.
     return this.tenantMembershipsService.assignRolesToMembership(
       tenant.tenantId,
       membershipId,

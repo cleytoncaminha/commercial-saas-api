@@ -4,8 +4,8 @@ import dataSource from '../typeorm-data-source';
 import {
   DEFAULT_PERMISSIONS,
   PermissionCode,
-  PermissionEntity,
-} from '../../modules/permissions';
+} from '../../modules/permissions/permissions.constants';
+import { PermissionEntity } from '../../modules/permissions/entities/permission.entity';
 import { RoleEntity } from '../../modules/roles';
 import { TenantMembershipEntity } from '../../modules/tenant-memberships';
 import { TenantEntity } from '../../modules/tenants';

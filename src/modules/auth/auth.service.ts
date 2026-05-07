@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
+import { TenantMembershipEntity } from '../tenant-memberships';
 import { TenantEntity } from '../tenants/entities/tenant.entity';
 import { UserEntity } from '../users/entities/user.entity';
 import { LoginDto } from './dto/login.dto';
@@ -16,6 +17,8 @@ export class AuthService {
     private readonly tenantsRepository: Repository<TenantEntity>,
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
+    @InjectRepository(TenantMembershipEntity)
+    private readonly membershipsRepository: Repository<TenantMembershipEntity>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -52,17 +55,39 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    const membership = await this.membershipsRepository.findOne({
+      where: {
+        tenantId: tenant.id,
+        userId: user.id,
+        isActive: true,
+      },
+      relations: {
+        roles: true,
+      },
+    });
+
+    if (membership === null || membership.roles.length === 0) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const membershipRole = membership.roles[0].code;
     const payload: JwtPayload = {
       sub: user.id,
       tenantId: tenant.id,
       tenantSlug: tenant.slug,
       schemaName: tenant.schemaName,
-      role: user.role,
+      membershipId: membership.id,
+      membershipRole,
     };
 
     return {
       accessToken: await this.jwtService.signAsync(payload),
-      user: this.toLoginUserResponse(user, tenant),
+      user: this.toLoginUserResponse(
+        user,
+        tenant,
+        membership.id,
+        membershipRole,
+      ),
     };
   }
 
@@ -73,15 +98,18 @@ export class AuthService {
   private toLoginUserResponse(
     user: UserEntity,
     tenant: TenantEntity,
+    membershipId: string,
+    membershipRole: string,
   ): LoginUserResponse {
     return {
       id: user.id,
       tenantId: tenant.id,
       tenantSlug: tenant.slug,
       schemaName: tenant.schemaName,
+      membershipId,
+      membershipRole,
       name: user.name,
       email: user.email,
-      role: user.role,
     };
   }
 }

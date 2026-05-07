@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { PermissionCode } from '../permissions';
+import { PermissionCode } from '../permissions/permissions.constants';
 import { RoleEntity } from '../roles/entities/role.entity';
 import { TenantMembershipEntity } from './entities/tenant-membership.entity';
 

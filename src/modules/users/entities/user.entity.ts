@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from '../../../common';
+import { BaseEntity } from '../../../common/entities/base.entity';
 import { TenantEntity } from '../../tenants/entities/tenant.entity';
 import { UserRole } from '../enums/user-role.enum';
 

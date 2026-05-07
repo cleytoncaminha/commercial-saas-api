@@ -9,7 +9,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { PermissionCode } from '../../permissions';
+import { PermissionCode } from '../../permissions/permissions.constants';
 
 export class CreateRoleDto {
   @ApiProperty({ example: 'Manager' })

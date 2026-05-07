@@ -1,5 +1,3 @@
-import { UserRole } from '../../users';
-
 export interface AuthenticatedTenantContext {
   tenantId: string;
   tenantSlug: string;
@@ -8,7 +6,9 @@ export interface AuthenticatedTenantContext {
 
 export interface AuthenticatedUserPayload extends AuthenticatedTenantContext {
   sub: string;
-  role: UserRole;
+  membershipId?: string;
+  membershipRole?: string;
+  role?: string;
 }
 
 export interface AuthMeResponse {

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, Index } from 'typeorm';
-import { BaseEntity } from '../../../common';
+import { BaseEntity } from '../../../common/entities/base.entity';
 
 @Entity({ name: 'tenants', schema: 'public' })
 export class TenantEntity extends BaseEntity {
