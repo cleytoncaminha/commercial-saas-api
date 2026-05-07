@@ -16,6 +16,8 @@
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "migration:generate": "typeorm-ts-node-commonjs -d src/database/typeorm-data-source.ts migration:generate src/database/migrations/Migration",
     "migration:run": "typeorm-ts-node-commonjs -d src/database/typeorm-data-source.ts migration:run",
+    "provision:tenant": "ts-node -r tsconfig-paths/register src/database/scripts/provision-tenant.ts",
+    "tenant:provision": "ts-node -r tsconfig-paths/register src/database/scripts/provision-tenant.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
