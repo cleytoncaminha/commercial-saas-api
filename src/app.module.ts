@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnv } from './config/env.validation';
 import { TenantsModule } from './modules/tenants';
+import { UsersModule } from './modules/users';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TenantsModule } from './modules/tenants';
       }),
     }),
     TenantsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

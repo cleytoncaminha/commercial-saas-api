@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { DataSource } from 'typeorm';
 import { TenantEntity } from '../modules/tenants/entities/tenant.entity';
+import { UserEntity } from '../modules/users/entities/user.entity';
 
 const DEFAULT_DATABASE_HOST = 'localhost';
 const DEFAULT_DATABASE_PORT = 5432;
@@ -81,7 +82,7 @@ export default new DataSource({
   username: readString('DATABASE_USER', DEFAULT_DATABASE_USER),
   password: readString('DATABASE_PASSWORD', DEFAULT_DATABASE_PASSWORD),
   database: readString('DATABASE_NAME', DEFAULT_DATABASE_NAME),
-  entities: [TenantEntity],
+  entities: [TenantEntity, UserEntity],
   migrations: [resolve(__dirname, 'migrations', '*{.ts,.js}')],
   synchronize: false,
 });
