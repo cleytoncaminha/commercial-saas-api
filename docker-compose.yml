@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: commercial_saas_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: commercial_user
+      POSTGRES_PASSWORD: commercial_pass
+      POSTGRES_DB: commercial_saas
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
