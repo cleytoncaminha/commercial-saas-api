@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { validateEnv } from './config/env.validation';
 import { AuthModule } from './modules/auth';
 import { PermissionsModule } from './modules/permissions';
+import { RolesModule } from './modules/roles';
+import { TenantMembershipsModule } from './modules/tenant-memberships';
 import { TenantsModule } from './modules/tenants';
 import { UsersModule } from './modules/users';
 
@@ -32,6 +34,8 @@ import { UsersModule } from './modules/users';
     }),
     AuthModule,
     PermissionsModule,
+    RolesModule,
+    TenantMembershipsModule,
     TenantsModule,
     UsersModule,
   ],

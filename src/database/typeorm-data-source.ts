@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { DataSource } from 'typeorm';
 import { PermissionEntity } from '../modules/permissions/entities/permission.entity';
+import { RoleEntity } from '../modules/roles/entities/role.entity';
+import { TenantMembershipEntity } from '../modules/tenant-memberships/entities/tenant-membership.entity';
 import { TenantEntity } from '../modules/tenants/entities/tenant.entity';
 import { UserEntity } from '../modules/users/entities/user.entity';
 
@@ -83,7 +85,13 @@ export default new DataSource({
   username: readString('DATABASE_USER', DEFAULT_DATABASE_USER),
   password: readString('DATABASE_PASSWORD', DEFAULT_DATABASE_PASSWORD),
   database: readString('DATABASE_NAME', DEFAULT_DATABASE_NAME),
-  entities: [PermissionEntity, TenantEntity, UserEntity],
+  entities: [
+    PermissionEntity,
+    RoleEntity,
+    TenantEntity,
+    TenantMembershipEntity,
+    UserEntity,
+  ],
   migrations: [resolve(__dirname, 'migrations', '*{.ts,.js}')],
   synchronize: false,
 });
